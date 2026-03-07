@@ -18,12 +18,10 @@ while True:
         break
     if any(op in user_input for op in ["+", "-", "*", "/"]):
         result = calculator(user_input)
-
-        print("\nAgent:", result, "\n")
-
+        tool_reply = f"I used the calculator tool. The result is {result}."
+        print("\nAgent:", tool_reply, "\n")
         memory.append("User: " + user_input)
-        memory.append("Agent: " + str(result))
-
+        memory.append("Agent: " + tool_reply)
         continue
     prompt = SYSTEM_PROMPT + "\n\nConversation:\n"
     for m in memory:
