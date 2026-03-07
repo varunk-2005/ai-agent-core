@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from tools import calculator
 load_dotenv()
 from google import genai
 api_key = os.getenv("GEMINI_API_KEY")
@@ -15,6 +16,15 @@ while True:
     user_input = input("You: ")
     if user_input.lower() == "exit":
         break
+    if any(op in user_input for op in ["+", "-", "*", "/"]):
+        result = calculator(user_input)
+
+        print("\nAgent:", result, "\n")
+
+        memory.append("User: " + user_input)
+        memory.append("Agent: " + str(result))
+
+        continue
     prompt = SYSTEM_PROMPT + "\n\nConversation:\n"
     for m in memory:
         prompt += m + "\n"
