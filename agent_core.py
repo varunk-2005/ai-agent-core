@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import json
 from tools import calculator
 load_dotenv()
 from google import genai
@@ -18,7 +19,12 @@ while True:
         break
     if any(op in user_input for op in ["+", "-", "*", "/"]):
         result = calculator(user_input)
-        tool_reply = f"I used the calculator tool. The result is {result}."
+        tool_reply = f"""
+                        Thought: This looks like a math query.
+                        Action: calculator
+                        Observation: {result}
+                        Final Answer: The result is {result}.
+                      """
         print("\nAgent:", tool_reply, "\n")
         memory.append("User: " + user_input)
         memory.append("Agent: " + tool_reply)
